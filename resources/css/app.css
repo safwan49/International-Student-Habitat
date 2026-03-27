@@ -1,0 +1,130 @@
+body {
+    background-color: #202124 !important;
+    color: #e8eaed !important;
+    min-height: 100vh;
+}
+
+.navbar {
+    background: #8ab4f8 !important;
+    border-bottom: 1px solid #78a6f2;
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link,
+.navbar span {
+    color: #202124 !important;
+    font-weight: 500;
+}
+
+.navbar .nav-link:hover {
+    color: #111 !important;
+}
+
+.navbar .btn,
+.navbar button {
+    color: #202124 !important;
+}
+
+.container,
+.container-fluid {
+    color: #e8eaed;
+}
+
+.card,
+.feed-card,
+.composer-card,
+.discussion-card,
+.answer-card,
+.dashboard-card {
+    background: #2b2f36 !important;
+    color: #e8eaed !important;
+    border: 1px solid #3a3f47 !important;
+    border-radius: 16px !important;
+    box-shadow: none !important;
+}
+
+.form-control,
+.form-select,
+textarea {
+    background-color: #30343b !important;
+    color: #e8eaed !important;
+    border: 1px solid #4a4f57 !important;
+}
+
+.form-control::placeholder,
+textarea::placeholder {
+    color: #b0b7c3 !important;
+}
+
+.form-control:focus,
+.form-select:focus,
+textarea:focus {
+    background-color: #30343b !important;
+    color: #ffffff !important;
+    border-color: #8ab4f8 !important;
+    box-shadow: 0 0 0 0.15rem rgba(138, 180, 248, 0.2) !important;
+}
+
+.table {
+    color: #e8eaed !important;
+    background-color: transparent !important;
+}
+
+.table th,
+.table td {
+    border-color: #3a3f47 !important;
+}
+
+.text-muted {
+    color: #b0b7c3 !important;
+}
+
+a {
+    color: #8ab4f8;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #a8c7fa;
+}
+
+.btn-primary {
+    background-color: #8ab4f8 !important;
+    border-color: #8ab4f8 !important;
+    color: #202124 !important;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: #a8c7fa !important;
+    border-color: #a8c7fa !important;
+    color: #202124 !important;
+}
+
+.btn-outline-primary {
+    color: #8ab4f8 !important;
+    border-color: #8ab4f8 !important;
+    background: transparent !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: #8ab4f8 !important;
+    border-color: #8ab4f8 !important;
+    color: #202124 !important;
+}
+
+.btn-danger {
+    background-color: #c5221f !important;
+    border-color: #c5221f !important;
+    color: #fff !important;
+}
+
+.btn-danger:hover {
+    background-color: #d93025 !important;
+    border-color: #d93025 !important;
+}
+
+.dashboard-title,
+h1, h2, h3, h4, h5, h6 {
+    color: #f1f3f4 !important;
+}
