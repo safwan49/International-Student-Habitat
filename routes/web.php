@@ -25,6 +25,8 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::resource('questions', QuestionController::class);
 
     Route::post('/questions/{question}/answers', [AnswerController::class, 'store'])->name('answers.store');
+    Route::post('/questions/{question}/answers/{answer}/mark-most-helpful',
+    [AnswerController::class, 'markMostHelpful'])->name('answers.markMostHelpful');
     Route::post('/vote/{type}/{id}', [VoteController::class, 'store'])->name('vote.store');
 });
 
