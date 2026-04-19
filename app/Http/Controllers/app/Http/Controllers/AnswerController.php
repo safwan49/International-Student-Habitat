@@ -31,4 +31,21 @@ class AnswerController extends Controller
 
         return response()->json(['message' => 'Marked as most helpful']);
     }
+
+    public function index($questionId, Request $request)
+    {
+        $sort = $request->query('sort');
+
+        $answers = Answer::where('question_id', $questionId);
+
+        if ($sort == 'recent') {
+            $answers->orderBy('created_at', 'desc');
+        }
+
+        if ($sort == 'helpful') {
+            $answers->orderBy('is_most_helpful', 'desc');
+        }
+
+        return $answers->get();
+    }
 }
