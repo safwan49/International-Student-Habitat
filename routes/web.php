@@ -23,6 +23,8 @@ Route::get('/cities/{city}', [CityController::class, 'show'])->name('cities.show
 Route::middleware(['auth','verified'])->group(function () {
     Route::resource('experiences', ExperienceController::class);
     Route::resource('questions', QuestionController::class);
+    Route::get('/questions/{question}/answers',
+    [AnswerController::class, 'index'])->name('answers.index');
 
     Route::post('/questions/{question}/answers', [AnswerController::class, 'store'])->name('answers.store');
     Route::post('/questions/{question}/answers/{answer}/mark-most-helpful',
