@@ -1,6 +1,6 @@
 # Student Habitat - Sprint 2
 
-This branch contains the implementation of features 6 to 11:
+This branch contains the implementation of features 6 to 10:
 
 6. Users can view and filter cities based on available city information
 7. Dashboard for easier navigation across the system
