@@ -77,7 +77,7 @@
     <form method="GET" class="feed-card p-3 mb-4">
         <div class="row g-2 align-items-end">
             <div class="col-md-8">
-                label class="form-label mb-1">Sort questions by</label>
+                <label class="form-label mb-1">Sort questions by</label>
                     <select name="sort" class="form-select">
                     <option value="recent" @selected($sort === 'recent')>Most Recent</option>
                     <option value="helpful" @selected($sort === 'helpful')>Most Helpful</option>
