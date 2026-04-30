@@ -15,28 +15,64 @@
         </select>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <select name="cost_of_living" class="form-select">
-            <option value="">Cost Level</option>
-            <option value="Low">Low</option>
-            <option value="Medium">Medium</option>
-            <option value="High">High</option>
+            <option value="">Any Cost Level</option>
+            @foreach($costLevels as $level)
+                <option value="{{ $level }}" @selected(request('cost_of_living') == $level)>
+                    {{ $level }}
+                </option>
+            @endforeach
         </select>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
+        <select name="climate" class="form-select">
+            <option value="">Any Climate</option>
+            @foreach($climates as $climate)
+                <option value="{{ $climate }}" @selected(request('climate') == $climate)>
+                    {{ $climate }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="col-md-4">
         <select name="safety_level" class="form-select">
             <option value="">Minimum Safety</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
+            @for($i = 1; $i <= 5; $i++)
+                <option value="{{ $i }}" @selected(request('safety_level') == $i)>
+                    {{ $i }}+
+                </option>
+            @endfor
         </select>
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-4">
+        <select name="transport_system" class="form-select">
+            <option value="">Any Transport System</option>
+            @foreach($transportSystems as $transport)
+                <option value="{{ $transport }}" @selected(request('transport_system') == $transport)>
+                    {{ $transport }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="col-md-4">
+        <select name="part_time_work" class="form-select">
+            <option value="">Part-time Work Availability</option>
+            <option value="1" @selected(request('part_time_work') === '1')>Available</option>
+            <option value="0" @selected(request('part_time_work') === '0')>Not Available</option>
+        </select>
+    </div>
+
+    <div class="col-md-3">
         <button class="btn btn-primary w-100">Filter</button>
+    </div>
+
+    <div class="col-md-3">
+        <a href="{{ route('cities.public') }}" class="btn btn-outline-secondary w-100">Reset</a>
     </div>
 </form>
 
@@ -50,6 +86,8 @@
                     <p><strong>Cost:</strong> {{ $city->cost_of_living }}</p>
                     <p><strong>Climate:</strong> {{ $city->climate }}</p>
                     <p><strong>Safety:</strong> {{ $city->safety_level }}/5</p>
+                    <p><strong>Transport:</strong> {{ $city->transport_system }}</p>
+                    <p><strong>Part-time work:</strong> {{ $city->part_time_work ? 'Available' : 'Not Available' }}</p>
                     <a href="{{ route('cities.show', $city) }}" class="btn btn-outline-primary btn-sm">View Details</a>
                 </div>
             </div>

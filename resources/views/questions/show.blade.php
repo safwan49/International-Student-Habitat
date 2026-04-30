@@ -38,6 +38,18 @@
         margin-right: 6px;
         margin-bottom: 6px;
     }
+
+    .helpful-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: #e8f6ee;
+    color: #198754;
+    border: 1px solid #b7e4c7;
+    font-size: 12px;
+    font-weight: 700;
+    }
+
 </style>
 
 <div class="discussion-wrap">
@@ -106,7 +118,18 @@
         </form>
     </div>
 
-    <h4 class="mb-3">Answers</h4>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Answers</h4>
+
+        <form method="GET" class="d-flex gap-2">
+            <select name="answer_sort" class="form-select form-select-sm">
+            <option value="recent" @selected($answerSort === 'recent')>Most Recent</option>
+            <option value="helpful" @selected($answerSort === 'helpful')>Most Helpful</option>
+            </select>
+
+            <button class="btn btn-sm btn-outline-primary">Sort</button>
+        </form>
+    </div>
 
     @forelse($question->answers as $answer)
         <div class="answer-card p-4 mb-3">
@@ -115,9 +138,19 @@
                     <div class="fw-semibold">{{ $answer->user->name }}</div>
                     <div class="text-muted small">{{ $answer->created_at->diffForHumans() }}</div>
                 </div>
+                @if($answer->is_most_helpful)
+                        <span class="helpful-badge">Most Helpful</span>
+                @endif    
             </div>
 
             <p class="mb-3">{{ $answer->body }}</p>
+            @if(auth()->id() === $question->user_id && ! $answer->is_most_helpful)
+                <form method="POST" action="{{ route('answers.markMostHelpful', [$question, $answer]) }}">
+                    @csrf
+                    @method('PATCH')
+                    <button class="btn btn-outline-success btn-sm">Mark as Most Helpful</button>
+                </form>
+            @endif
         </div>
     @empty
         <div class="answer-card p-4">

@@ -74,6 +74,21 @@
         <h2 class="mb-0">Questions Feed</h2>
         <a href="{{ route('questions.create') }}" class="btn btn-primary">Ask Question</a>
     </div>
+    <form method="GET" class="feed-card p-3 mb-4">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-8">
+                label class="form-label mb-1">Sort questions by</label>
+                    <select name="sort" class="form-select">
+                    <option value="recent" @selected($sort === 'recent')>Most Recent</option>
+                    <option value="helpful" @selected($sort === 'helpful')>Most Helpful</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <button class="btn btn-primary w-100">Apply Sort</button>
+            </div>
+        </div>
+    </form>
 
     @forelse($questions as $question)
         <div class="feed-card p-4 mb-4">

@@ -22,4 +22,15 @@ class AnswerController extends Controller
 
         return back()->with('success', 'Answer submitted.');
     }
+    public function markMostHelpful(Question $question, Answer $answer)
+    {
+        abort_if($question->user_id !== auth()->id(), 403);
+        abort_if($answer->question_id !== $question->id, 404);
+
+        $question->answers()->update(['is_most_helpful' => false]);
+
+        $answer->update(['is_most_helpful' => true]);
+
+        return back()->with('success', 'Most helpful answer selected.');
+    }
 }

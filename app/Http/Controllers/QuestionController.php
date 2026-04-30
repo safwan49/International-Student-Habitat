@@ -11,15 +11,22 @@ class QuestionController extends Controller
 {
     public function index(Request $request)
     {
+        $sort = $request->get('sort', 'recent');
+
         $questions = Question::with(['user', 'country', 'city', 'answers'])
             ->withCount('answers')
-            ->latest()
+            ->withSum('votes as vote_score_sum', 'vote')
+            ->when(
+                $sort === 'helpful',
+                fn($q) => $q->orderByDesc('vote_score_sum')->latest(),
+                fn($q) => $q->latest()
+            )
             ->get();
 
         $countries = Country::all();
         $cities = City::with('country')->get();
 
-        return view('questions.index', compact('questions', 'countries', 'cities'));
+        return view('questions.index', compact('questions', 'countries', 'cities', 'sort'));
     }
 
     public function create()
@@ -50,25 +57,28 @@ class QuestionController extends Controller
         return redirect()->route('questions.index')->with('success', 'Question posted successfully.');
     }
 
-    public function show(Question $question)
+    public function show(Request $request, Question $question)
     {
+        $answerSort = $request->get('answer_sort', 'recent');
+
         $question->load([
             'user',
             'country',
             'city',
-            'answers.user',
         ]);
 
-        $question->setRelation(
-            'answers',
-            $question->answers
-                ->sortByDesc(function ($answer) {
-                    return $answer->is_most_helpful ? 1 : 0;
-                })
-                ->sortByDesc('created_at')
-        );
+        $answers = $question->answers()
+            ->with('user')
+            ->when(
+                $answerSort === 'helpful',
+                fn($q) => $q->orderByDesc('is_most_helpful')->latest(),
+                fn($q) => $q->latest()
+            )
+            ->get();
 
-        return view('questions.show', compact('question'));
+        $question->setRelation('answers', $answers);
+
+        return view('questions.show', compact('question', 'answerSort'));
     }
 
     public function edit(Question $question)
