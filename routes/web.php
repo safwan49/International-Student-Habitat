@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CityRatingController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryController;
@@ -28,14 +31,31 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::patch('/questions/{question}/answers/{answer}/most-helpful', [AnswerController::class, 'markMostHelpful'])
         ->name('answers.markMostHelpful');
     Route::post('/vote/{type}/{id}', [VoteController::class, 'store'])->name('vote.store');
+
+    //s4
+    //chat
+    Route::get('/messages',[MessageController::class, 'index'])->name('messages.index');
+    Route::get('/messages/{user}', [MessageController::class, 'show'])->name('messages.show');
+    Route::post('/messages/{user}',[MessageController::class, 'store'])->name('messages.store');
+    //city rating
+    Route::post('/cities/{city}/rate', [CityRatingController::class, 'store'])->name('cities.rate');
+    //report
+    Route::post('/report/{type}/{id}', [ReportController::class, 'store'])->name('report.store');
+    //
 });
 
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::resource('countries', CountryController::class);
-
     Route::resource('admin/cities', CityController::class)
         ->names('admin.cities')
         ->except(['show']);
+    //s4 admin control over reports
+    Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/reports', [\App\Http\Controllers\Admin\ReportController::class, 'index'])  ->name('reports.index');
+    Route::patch('/reports/{report}/approve', [\App\Http\Controllers\Admin\ReportController::class, 'approve'])->name('reports.approve');
+    Route::patch('/reports/{report}/remove',[\App\Http\Controllers\Admin\ReportController::class, 'remove']) ->name('reports.remove');
+    //
+});
 });
 
 require __DIR__.'/auth.php';
