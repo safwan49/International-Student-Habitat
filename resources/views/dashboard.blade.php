@@ -87,6 +87,12 @@
             <p>Read student experiences from different cities and understand what users are contributing.</p>
             <a href="{{ route('experiences.index') }}" class="btn btn-outline-primary">Go to Experiences</a>
         </div>
+
+        <div class="dashboard-card">
+            <h4>Reported Content</h4>
+            <p>Review content that users have flagged as inappropriate and approve or remove it.</p>
+            <a href="{{ route('admin.reports.index') }}" class="btn btn-danger">Review Reports</a>
+        </div>
     @else
         <div class="dashboard-section-title">Getting Started</div>
 
@@ -118,6 +124,12 @@
             <h4>View Questions</h4>
             <p>Join discussions, read what others are asking, and contribute answers that can help the community.</p>
             <a href="{{ route('questions.index') }}" class="btn btn-outline-primary">View Questions</a>
+        </div>
+
+        <div class="dashboard-card">
+            <h4>Messages</h4>
+            <p>Chat directly with other students to ask questions, share tips, or get advice about city life.</p>
+            <a href="{{ route('messages.index') }}" class="btn btn-primary">Open Messages</a>
         </div>
     @endif
 </div>

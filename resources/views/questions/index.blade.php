@@ -99,7 +99,17 @@
                     </div>
 
                     <div>
+                        <div class="d-flex align-items-center gap-2">
                         <div class="fw-semibold">{{ $question->user->name }}</div>
+                        @auth
+                                @if(auth()->id() !== $question->user_id)
+                                    <a href="{{ route('messages.show', $question->user) }}"
+                                       class="btn btn-sm btn-outline-primary py-0 px-2"
+                                       style="font-size:11px;">💬 Message</a>
+                                @endif
+                            @endauth
+                        </div>
+                        <x-reputation-badge :user="$question->user" />
                         <div class="feed-meta">
                             {{ $question->created_at->diffForHumans() }}
                         </div>
@@ -164,6 +174,11 @@
                 <a href="{{ route('questions.show', $question) }}" class="btn btn-outline-secondary">
                     View Discussion
                 </a>
+                @auth
+                    @if(auth()->id() !== $question->user_id)
+                        <x-report-button type="question" :id="$question->id" />
+                    @endif
+                @endauth
             </div>
         </div>
     @empty

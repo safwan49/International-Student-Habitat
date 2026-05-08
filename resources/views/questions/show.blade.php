@@ -63,7 +63,17 @@
                 {{ strtoupper(substr($question->user->name ?? 'U', 0, 1)) }}
             </div>
             <div>
+                <div class="d-flex align-items-center gap-2">
                 <div class="fw-semibold">{{ $question->user->name }}</div>
+                @auth
+                        @if(auth()->id() !== $question->user_id)
+                            <a href="{{ route('messages.show', $question->user) }}"
+                               class="btn btn-sm btn-outline-primary py-0 px-2"
+                               style="font-size:11px;">💬 Message</a>
+                        @endif
+                    @endauth
+                </div>
+                <x-reputation-badge :user="$question->user" />
                 <div class="text-muted small">{{ $question->created_at->diffForHumans() }}</div>
             </div>
         </div>
@@ -103,6 +113,11 @@
                     ▼ Downvote ({{ $question->downvotes_count }})
                 </button>
             </form>
+            @auth
+                @if(auth()->id() !== $question->user_id)
+                    <x-report-button type="question" :id="$question->id" />
+                @endif
+            @endauth
         </div>
     </div>
 
@@ -135,7 +150,17 @@
         <div class="answer-card p-4 mb-3">
             <div class="d-flex justify-content-between align-items-start mb-2">
                 <div>
+                    <div class="d-flex align-items-center gap-2">
                     <div class="fw-semibold">{{ $answer->user->name }}</div>
+                    @auth
+                            @if(auth()->id() !== $answer->user_id)
+                                <a href="{{ route('messages.show', $answer->user) }}"
+                                   class="btn btn-sm btn-outline-primary py-0 px-2"
+                                   style="font-size:11px;">💬 Message</a>
+                            @endif
+                        @endauth
+                    </div>
+                    <x-reputation-badge :user="$answer->user" />
                     <div class="text-muted small">{{ $answer->created_at->diffForHumans() }}</div>
                 </div>
                 @if($answer->is_most_helpful)
@@ -151,6 +176,11 @@
                     <button class="btn btn-outline-success btn-sm">Mark as Most Helpful</button>
                 </form>
             @endif
+            @auth
+                @if(auth()->id() !== $answer->user_id)
+                    <x-report-button type="answer" :id="$answer->id" />
+                @endif
+            @endauth
         </div>
     @empty
         <div class="answer-card p-4">
