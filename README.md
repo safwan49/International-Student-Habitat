@@ -5,7 +5,7 @@ This branch contains the  5 features:
 
 1.The system shall allow users to post questions related to a specific country or city.
 
-2.There will be no upvoteand downvote system on the posts for both the experience report on requirement 2 and the questions.
+2.There will be upvote and downvote system on the posts for both the experience report on requirement 2 and the questions.
 
 3.The system shall allow experienced users to respond to posted questions.
 
